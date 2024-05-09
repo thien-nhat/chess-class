@@ -107,11 +107,9 @@ def move_p(board, pCol, pRow, piece):
                     print(result)
                     moves.append(result)
         
-            else:
-                break
     else:
         new_pCol = pCol + 1
-        print(f"Trying to access board[{new_pCol}][{pRow}]")
+        print(f"Trying to eating access board[{new_pCol}][{pRow}]")
         newboard = board.copy()
         if 0 <= new_pCol < 8:
             # print("The new update: " + update_board_with_fen(board[new_pCol], pRow, piece))
@@ -124,6 +122,7 @@ def move_p(board, pCol, pRow, piece):
                 moves.append(result)
     
     # Ăn
+    print("ear")
     offsets = [(1, 1), (1, -1)]
     for offset in offsets:
         new_pCol = pCol + offset[0]
@@ -141,8 +140,6 @@ def move_p(board, pCol, pRow, piece):
                 result = '/'.join(newboard)
                 print(result) 
                 moves.append(result)
-        else:
-            break
 
     return moves
 
@@ -164,9 +161,6 @@ def move_P(board, pCol, pRow, piece):
                     result = '/'.join(newboard)
                     print(result)
                     moves.append(result)    
-        
-            else:
-                break
     else:
         new_pCol = pCol - 1
         print(f"Trying to access board[{new_pCol}][{pRow}]")
@@ -201,8 +195,6 @@ def move_P(board, pCol, pRow, piece):
                 result = '/'.join(newboard)
                 print(result)
                 moves.append(result)
-        else:
-            break
 
     return moves
 
@@ -264,8 +256,6 @@ def move_r(board, pCol, pRow, piece):
                 print(result)
                 moves.append(result) 
         
-        else:
-            break
     # Check all squares in the same pRow above the rook
     for new_pCol in range(pCol + 1, 8):
         if 0 <= new_pCol < 8 and 0 <= pRow < 8:
@@ -290,8 +280,6 @@ def move_r(board, pCol, pRow, piece):
                 print(result)
                 moves.append(result) 
         
-        else:
-            break
     # Check all squares in the same pRow below the rook
     for new_pCol in range(pCol - 1, -1, -1):
         if 0 <= new_pCol < 8 and 0 <= pRow < 8:
@@ -315,9 +303,6 @@ def move_r(board, pCol, pRow, piece):
                 result = '/'.join(newboard)
                 print(result)
                 moves.append(result) 
-        
-        else:
-            break
     return moves
 
 def move_b(board, pCol, pRow, piece):
@@ -349,8 +334,6 @@ def move_b(board, pCol, pRow, piece):
                 result = '/'.join(newboard)
                 print(result)
                 moves.append(result)
-        else:
-            break
 
     # Check diagonal squares up-left
     for delta in range(1, min(8 - pCol, pRow + 1)):
@@ -378,8 +361,6 @@ def move_b(board, pCol, pRow, piece):
                 result = '/'.join(newboard)
                 print(result)
                 moves.append(result)
-        else:
-            break
 
     # Check diagonal squares down-right
     for delta in range(1, min(pCol + 1, 8 - pRow)):
@@ -407,8 +388,6 @@ def move_b(board, pCol, pRow, piece):
                 result = '/'.join(newboard)
                 print(result)
                 moves.append(result) 
-        else:
-            break
 
     # Check diagonal squares down-left
     for delta in range(1, min(pCol + 1, pRow + 1)):
@@ -436,8 +415,6 @@ def move_b(board, pCol, pRow, piece):
                 result = '/'.join(newboard)
                 print(result)
                 moves.append(result)
-        else:
-            break
 
     return moves
 
@@ -478,8 +455,6 @@ def move_k(board, pCol, pRow, piece):
                 result = '/'.join(newboard)
                 print(result)   
                 moves.append(result)
-        else:
-            break
     return moves
 
 def move_n(board, pCol, pRow, piece):
@@ -551,7 +526,7 @@ def generate_legal_moves(fen):
             else:
                 rowTemp += 1
     return all_moves
-fen = "rn2kb1r/pp2nppp/2p1b3/q2pp1B1/1P1PP1P1/2P4N/P4P1P/RN1QKB1R b KQkq b3 0 7"
+fen = "1n6/1p1k1ppr/rP6/p1p1PN2/R3pNRb/1QP5/5P2/4K3 w - - 0 24"
 all_moves = generate_legal_moves(fen)
 
 # print(all_moves)
@@ -574,6 +549,5 @@ def read_file_and_get_first_part(filename):
 
 # Usage
 expected = read_file_and_get_first_part('text.txt')
-print(expected)
 
 print(compare_fen_lists(expected, all_moves))
