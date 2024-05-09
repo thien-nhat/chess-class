@@ -93,11 +93,10 @@ def move_p(board, pCol, pRow, piece):
     moves = []
     # Di chuyển
     if pCol == 1:
-        for new_pCol in range(pCol + 1, pCol + 2):
+        for new_pCol in range(pCol + 1, pCol + 3):
             print(f"Trying to access board[{new_pCol}][{pRow}]")
             newboard = board.copy()
             if 0 <= new_pCol < 8:
-                # moves.append((new_pCol, pRow))
                 if meet_pieces(board[new_pCol], pRow):
                     break
                 else:
@@ -115,7 +114,6 @@ def move_p(board, pCol, pRow, piece):
         print(f"Trying to access board[{new_pCol}][{pRow}]")
         newboard = board.copy()
         if 0 <= new_pCol < 8:
-            # moves.append((new_pCol, pRow))
             # print("The new update: " + update_board_with_fen(board[new_pCol], pRow, piece))
             if not meet_pieces(board[new_pCol], pRow):
                 # print("The new update: " + update_board_with_fen(board[new_pCol], pRow, piece))
@@ -157,7 +155,6 @@ def move_P(board, pCol, pRow, piece):
             print(f"Trying to access board[{new_pCol}][{pRow}]")
             newboard = board.copy()
             if 0 <= new_pCol < 8:
-                # moves.append((new_pCol, pRow))
                 if meet_pieces(board[new_pCol], pRow):
                     break
                 else:
@@ -175,7 +172,6 @@ def move_P(board, pCol, pRow, piece):
         print(f"Trying to access board[{new_pCol}][{pRow}]")
         newboard = board.copy()
         if 0 <= new_pCol < 8:
-            # moves.append((new_pCol, pRow))
             # print("The new update: " + update_board_with_fen(board[new_pCol], pRow, piece))
             if not meet_pieces(board[new_pCol], pRow):
                 # print("The new update: " + update_board_with_fen(board[new_pCol], pRow, piece))
@@ -217,7 +213,6 @@ def move_r(board, pCol, pRow, piece):
         if 0 <= pCol < 8 and 0 <= new_pRow < 8:
             print(f"Trying to access board[{pCol}][{new_pRow}]")
             newboard = board.copy()
-            moves.append((pCol, new_pRow))
             # result = update_board_with_fen(board[pCol], new_pRow, piece)
             # if result == board[pCol]:
             #     break
@@ -249,7 +244,6 @@ def move_r(board, pCol, pRow, piece):
         if 0 <= pCol < 8 and 0 <= new_pRow < 8:
             print(f"Trying to access board[{pCol}][{new_pRow}]")
             newboard = board.copy()
-            moves.append((pCol, new_pRow))
             if meet_pieces(board[pCol], new_pRow):
                 # print("The new update: " + eat_pieces(board[pCol], new_pRow, piece))
                 result = eat_pieces(board[pCol], new_pRow, piece) 
@@ -277,7 +271,6 @@ def move_r(board, pCol, pRow, piece):
         if 0 <= new_pCol < 8 and 0 <= pRow < 8:
             print(f"Trying to access board[{new_pCol}][{pRow}]")
             newboard = board.copy()
-            # moves.append((new_pCol, pRow))
             if meet_pieces(board[new_pCol], pRow):
                 # print("The new update: " + eat_pieces(board[new_pCol], pRow, piece))
                 result = eat_pieces(board[new_pCol], pRow, piece)         
@@ -304,7 +297,6 @@ def move_r(board, pCol, pRow, piece):
         if 0 <= new_pCol < 8 and 0 <= pRow < 8:
             print(f"Trying to access board[{new_pCol}][{pRow}]")
             newboard = board.copy()
-            # moves.append((new_pCol, pRow))
             if meet_pieces(board[new_pCol], pRow):
                 # print("The new update: " + eat_pieces(board[new_pCol], pRow, piece))
                 result = eat_pieces(board[new_pCol], pRow, piece)
@@ -371,7 +363,7 @@ def move_b(board, pCol, pRow, piece):
                 newboard = board.copy()
                 result = eat_pieces(board[new_pCol], new_pRow, piece)         
                 if newboard[new_pCol] == result:
-                    continue
+                    break
                 newboard[new_pCol] = result
                 newboard[pCol] =  update_old_fen(board[pCol], pRow)
                 result = '/'.join(newboard)
@@ -400,7 +392,7 @@ def move_b(board, pCol, pRow, piece):
                 newboard = board.copy()
                 result = eat_pieces(board[new_pCol], new_pRow, piece)     
                 if newboard[new_pCol] == result:
-                    continue
+                    break
                 newboard[new_pCol] = result    
                 newboard[pCol] =  update_old_fen(board[pCol], pRow)
                 result = '/'.join(newboard)
@@ -429,7 +421,7 @@ def move_b(board, pCol, pRow, piece):
                 newboard = board.copy()
                 result = eat_pieces(board[new_pCol], new_pRow, piece) 
                 if newboard[new_pCol] == result:
-                    continue
+                    break
                 newboard[new_pCol] = result       
                 newboard[pCol] =  update_old_fen(board[pCol], pRow)
                 result = '/'.join(newboard)
@@ -522,77 +514,8 @@ def move_n(board, pCol, pRow, piece):
     return moves
 
 
-def generate_legal_moves1(fen):
-    board, turn, _, _, _, _ = parse_fen(fen)
-    print(board)
-    
-    for pCol, row in enumerate(board):
-        rowTemp = 0
-        for pRow, piece in enumerate(row):
-            if piece.isdigit():
-                rowTemp += int(piece)
-            elif (turn == 'w' and piece.isupper()) or (turn == 'b' and piece.islower()):
-                if piece.lower() == 'k':  
-                    print(f"Vua found at {pCol}, {rowTemp}")
-                    move_k(board, pCol, rowTemp, piece)
-                elif piece.lower() == 'n':  
-                    print(f"Mã found at {pCol}, {rowTemp}")
-                    move_n(board, pCol, rowTemp, piece)
-                elif piece.lower() == 'p':  
-                    print(f"Tốt found at {pCol}, {rowTemp}")
-                    if piece == 'p':
-                        move_p(board, pCol, rowTemp, piece)
-                    else:
-                        move_P(board, pCol, rowTemp, piece)
-                elif piece.lower() == 'r':  
-                    print(f"Xe found at {pCol}, {rowTemp}")
-                    move_r(board, pCol, rowTemp, piece)
-                elif piece.lower() == 'b':  
-                    print(f"Tượng found at {pCol}, {rowTemp}")
-                    move_b(board, pCol, rowTemp, piece)
-                elif piece.lower() == 'q':  
-                    print(f"Hậu found at {pCol}, {rowTemp}")
-                    move_q(board, pCol, rowTemp, piece)
-                rowTemp += 1
-            else:
-                rowTemp += 1
-    # for pCol, row in enumerate(board):
-    #     rowTemp = 0
-    #     for pRow, piece in enumerate(row):
-    #         if piece.isdigit():
-    #             rowTemp += int(piece)
-    #         elif piece == 'k' or piece == 'K':  
-    #             print(f"Vua found at {pCol}, {rowTemp}")
-    #             move_k(board, pCol, rowTemp, piece)
-    #             rowTemp += 1
-    #         elif piece == 'n' or piece == 'N':  
-    #             print(f"Mã found at {pCol}, {rowTemp}")
-    #             move_n(board, pCol, rowTemp, piece)
-    #             rowTemp += 1
-    #             #legal_moves.extend([(pCol, pRow, new_pCol, new_pRow) for new_pCol, new_pRow in knight_moves])
-    #         elif piece == 'p':  
-    #             print(f"Tốt đen found at {pCol}, {rowTemp}")
-    #             move_p(board, pCol, rowTemp, piece)
-    #             rowTemp += 1
-    #         elif piece == 'P':  
-    #             print(f"Tốt trắng found at {pCol}, {rowTemp}")
-    #             move_P(board, pCol, rowTemp, piece)
-    #             rowTemp += 1
-    #         elif piece == 'r' or piece == 'R':  
-    #             print(f"Xe found at {pCol}, {rowTemp}")
-    #             move_r(board, pCol, rowTemp, piece)
-    #             rowTemp += 1
-    #         elif piece == 'b' or piece == 'B':  
-    #             print(f"Tượng found at {pCol}, {rowTemp}")
-    #             move_b(board, pCol, rowTemp, piece)
-    #             rowTemp += 1
-    #         elif piece == 'q' or piece == 'Q':  
-    #             print(f"Hậu found at {pCol}, {rowTemp}")
-    #             move_q(board, pCol, rowTemp, piece)
-    #             rowTemp += 1
-    #         else :
-    #             rowTemp += 1
-    # return legal_moves
+
+
 def generate_legal_moves(fen):
     board, turn, _, _, _, _ = parse_fen(fen)
     all_moves = []  # Initialize an empty list to collect all moves
@@ -628,7 +551,7 @@ def generate_legal_moves(fen):
             else:
                 rowTemp += 1
     return all_moves
-fen = "r1bk3r/p2pBpNp/n4n2/1p1NP2P/6P1/3P4/P1P1K3/q5b1 w KQkq - 0 1"
+fen = "rn2kb1r/pp2nppp/2p1b3/q2pp1B1/1P1PP1P1/2P4N/P4P1P/RN1QKB1R b KQkq b3 0 7"
 all_moves = generate_legal_moves(fen)
 
 # print(all_moves)
@@ -641,34 +564,16 @@ def compare_fen_lists(list1, list2):
 
     return in_list1_not_list2, in_list2_not_list1
 
-expected = ["r1bkN2r/p2pBp1p/n4n2/1p1NP2P/6P1/3P4/P1P1K3/q5b1",
-"r1bk3r/p2pBp1p/n3Nn2/1p1NP2P/6P1/3P4/P1P1K3/q5b1",
-"r1bk3r/p2pBp1p/n4n2/1p1NPN1P/6P1/3P4/P1P1K3/q5b1",
-"r1bk1B1r/p2p1pNp/n4n2/1p1NP2P/6P1/3P4/P1P1K3/q5b1",
-"r1bB3r/p2p1pNp/n4n2/1p1NP2P/6P1/3P4/P1P1K3/q5b1",
-"r1bk3r/p2p1pNp/n4B2/1p1NP2P/6P1/3P4/P1P1K3/q5b1",
-"r1bk3r/p2p1pNp/n2B1n2/1p1NP2P/6P1/3P4/P1P1K3/q5b1",
-"r1bk3r/p2p1pNp/n4n2/1pBNP2P/6P1/3P4/P1P1K3/q5b1",
-"r1bk3r/p2p1pNp/n4n2/1p1NP2P/1B4P1/3P4/P1P1K3/q5b1",
-"r1bk3r/p2p1pNp/n4n2/1p1NP2P/6P1/B2P4/P1P1K3/q5b1",
-"r1bk3r/p1NpBpNp/n4n2/1p2P2P/6P1/3P4/P1P1K3/q5b1",
-"r1bk3r/p2pBpNp/n4N2/1p2P2P/6P1/3P4/P1P1K3/q5b1",
-"r1bk3r/p2pBpNp/nN3n2/1p2P2P/6P1/3P4/P1P1K3/q5b1",
-"r1bk3r/p2pBpNp/n4n2/1p2P2P/5NP1/3P4/P1P1K3/q5b1",
-"r1bk3r/p2pBpNp/n4n2/1p2P2P/1N4P1/3P4/P1P1K3/q5b1",
-"r1bk3r/p2pBpNp/n4n2/1p2P2P/6P1/3PN3/P1P1K3/q5b1",
-"r1bk3r/p2pBpNp/n4n2/1p2P2P/6P1/2NP4/P1P1K3/q5b1",
-"r1bk3r/p2pBpNp/n4n2/1p1NP2P/6P1/3P1K2/P1P5/q5b1",
-"r1bk3r/p2pBpNp/n4n2/1p1NP2P/6P1/3P4/P1PK4/q5b1",
-"r1bk3r/p2pBpNp/n4P2/1p1N3P/6P1/3P4/P1P1K3/q5b1",
-"r1bk3r/p2pBpNp/n4n1P/1p1NP3/6P1/3P4/P1P1K3/q5b1",
-"r1bk3r/p2pBpNp/n3Pn2/1p1N3P/6P1/3P4/P1P1K3/q5b1",
-"r1bk3r/p2pBpNp/n4n2/1p1NP1PP/8/3P4/P1P1K3/q5b1",
-"r1bk3r/p2pBpNp/n4n2/1p1NP2P/3P2P1/8/P1P1K3/q5b1",
-"r1bk3r/p2pBpNp/n4n2/1p1NP2P/6P1/2PP4/P3K3/q5b1",
-"r1bk3r/p2pBpNp/n4n2/1p1NP2P/6P1/P2P4/2P1K3/q5b1",
-"r1bk3r/p2pBpNp/n4n2/1p1NP2P/2P3P1/3P4/P3K3/q5b1",
-"r1bk3r/p2pBpNp/n4n2/1p1NP2P/P5P1/3P4/2P1K3/q5b1"]
 
+
+def read_file_and_get_first_part(filename):
+    with open(filename, 'r') as file:
+        lines = file.readlines()
+    expected = [line.split(' ')[0] for line in lines]
+    return expected
+
+# Usage
+expected = read_file_and_get_first_part('text.txt')
+print(expected)
 
 print(compare_fen_lists(expected, all_moves))
