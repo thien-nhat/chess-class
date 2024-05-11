@@ -1,3 +1,4 @@
+turn = ''
 def parse_fen(fen):
     board, turn, castling, en_passant, halfmove_clock, fullmove_number = fen.split()
     return board.split('/'), turn, castling, en_passant, int(halfmove_clock), int(fullmove_number)
@@ -105,7 +106,7 @@ def move_p(board, pCol, pRow, piece):
                     newboard[new_pCol] = update_board_with_fen(board[new_pCol], pRow, piece)         
                     result = '/'.join(newboard)
                     print(result)
-                    moves.append(result)
+                    moves.append(result + ' ' +turn)                       
         
     else:
         new_pCol = pCol + 1
@@ -119,7 +120,7 @@ def move_p(board, pCol, pRow, piece):
                 newboard[new_pCol] = update_board_with_fen(board[new_pCol], pRow, piece)         
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result)
+                moves.append(result + ' ' +turn)                       
     
     # Ăn
     print("ear")
@@ -139,7 +140,7 @@ def move_p(board, pCol, pRow, piece):
                 newboard[pCol] =  update_old_fen(board[pCol], pRow)
                 result = '/'.join(newboard)
                 print(result) 
-                moves.append(result)
+                moves.append(result + ' ' +turn)                       
 
     return moves
 
@@ -160,7 +161,7 @@ def move_P(board, pCol, pRow, piece):
                     newboard[new_pCol] = update_board_with_fen(board[new_pCol], pRow, piece)         
                     result = '/'.join(newboard)
                     print(result)
-                    moves.append(result)    
+                    moves.append(result + ' ' +turn)                       
     else:
         new_pCol = pCol - 1
         print(f"Trying to access board[{new_pCol}][{pRow}]")
@@ -173,7 +174,7 @@ def move_P(board, pCol, pRow, piece):
                 newboard[new_pCol] = update_board_with_fen(board[new_pCol], pRow, piece)         
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result)   
+                moves.append(result + ' ' +turn)                       
     
     # Ăn
     offsets = [(-1, 1), (-1, -1)]
@@ -194,7 +195,7 @@ def move_P(board, pCol, pRow, piece):
                 newboard[pCol] =  update_old_fen(board[pCol], pRow)
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result)
+                moves.append(result + ' ' +turn)                       
 
     return moves
 
@@ -219,7 +220,7 @@ def move_r(board, pCol, pRow, piece):
                 newboard[pCol] =  update_old_fen(newboard[pCol], pRow) 
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result) 
+                moves.append(result + ' ' +turn)                       
                 break
             else:
                 # print("The new update: " + update_board_with_fen(board[pCol], new_pRow, piece))
@@ -227,7 +228,7 @@ def move_r(board, pCol, pRow, piece):
                 newboard[pCol] = update_board_with_fen(result, new_pRow, piece)         
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result)    
+                moves.append(result + ' ' +turn)                       
         
         else:
             break
@@ -245,7 +246,7 @@ def move_r(board, pCol, pRow, piece):
                 newboard[pCol] =  update_old_fen(newboard[pCol], pRow)
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result) 
+                moves.append(result + ' ' +turn)                       
                 break
             else:
                 # print("The new update: " + update_board_with_fen(board[pCol], new_pRow, piece))
@@ -254,7 +255,7 @@ def move_r(board, pCol, pRow, piece):
                 newboard[pCol] = update_board_with_fen(result, new_pRow, piece)         
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result) 
+                moves.append(result + ' ' +turn)                       
         
     # Check all squares in the same pRow above the rook
     for new_pCol in range(pCol + 1, 8):
@@ -270,7 +271,7 @@ def move_r(board, pCol, pRow, piece):
                 newboard[pCol] =  update_old_fen(board[pCol], pRow)
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result)
+                moves.append(result + ' ' +turn)                       
                 break
             else:
                 # print("The new update: " + update_board_with_fen(board[new_pCol], pRow, piece))
@@ -278,7 +279,7 @@ def move_r(board, pCol, pRow, piece):
                 newboard[new_pCol] = update_board_with_fen(board[new_pCol], pRow, piece)         
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result) 
+                moves.append(result + ' ' +turn)                       
         
     # Check all squares in the same pRow below the rook
     for new_pCol in range(pCol - 1, -1, -1):
@@ -294,7 +295,7 @@ def move_r(board, pCol, pRow, piece):
                 newboard[pCol] =  update_old_fen(board[pCol], pRow)
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result)
+                moves.append(result + ' ' +turn)                       
                 break
             else:
                 # print("The new update: " + update_board_with_fen(board[new_pCol], pRow, piece))
@@ -302,7 +303,7 @@ def move_r(board, pCol, pRow, piece):
                 newboard[new_pCol] = update_board_with_fen(board[new_pCol], pRow, piece)
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result) 
+                moves.append(result + ' ' +turn)                       
     return moves
 
 def move_b(board, pCol, pRow, piece):
@@ -324,7 +325,7 @@ def move_b(board, pCol, pRow, piece):
                 newboard[pCol] =  update_old_fen(board[pCol], pRow)
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result)
+                moves.append(result + ' ' +turn)                       
                 break
             else:
                 # print("The new update: " + update_board_with_fen(board[new_pCol], new_pRow, piece))
@@ -333,7 +334,7 @@ def move_b(board, pCol, pRow, piece):
                 newboard[new_pCol] = update_board_with_fen(board[new_pCol], new_pRow, piece)         
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result)
+                moves.append(result + ' ' +turn)                       
 
     # Check diagonal squares up-left
     for delta in range(1, min(8 - pCol, pRow + 1)):
@@ -351,7 +352,7 @@ def move_b(board, pCol, pRow, piece):
                 newboard[pCol] =  update_old_fen(board[pCol], pRow)
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result)
+                moves.append(result + ' ' +turn)                       
                 break
             else:
                 # print("The new update: " + update_board_with_fen(board[new_pCol], new_pRow, piece))
@@ -360,7 +361,7 @@ def move_b(board, pCol, pRow, piece):
                 newboard[new_pCol] = update_board_with_fen(board[new_pCol], new_pRow, piece)         
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result)
+                moves.append(result + ' ' +turn)                       
 
     # Check diagonal squares down-right
     for delta in range(1, min(pCol + 1, 8 - pRow)):
@@ -378,7 +379,7 @@ def move_b(board, pCol, pRow, piece):
                 newboard[pCol] =  update_old_fen(board[pCol], pRow)
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result)
+                moves.append(result + ' ' +turn)                       
                 break
             else:
                 # print("The new update: " + update_board_with_fen(board[new_pCol], new_pRow, piece))
@@ -387,7 +388,7 @@ def move_b(board, pCol, pRow, piece):
                 newboard[new_pCol] = update_board_with_fen(board[new_pCol], new_pRow, piece)         
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result) 
+                moves.append(result + ' ' +turn)                       
 
     # Check diagonal squares down-left
     for delta in range(1, min(pCol + 1, pRow + 1)):
@@ -405,7 +406,7 @@ def move_b(board, pCol, pRow, piece):
                 newboard[pCol] =  update_old_fen(board[pCol], pRow)
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result)
+                moves.append(result + ' ' +turn)                       
                 break
             else:
                 # print("The new update: " + update_board_with_fen(board[new_pCol], new_pRow, piece))
@@ -414,7 +415,7 @@ def move_b(board, pCol, pRow, piece):
                 newboard[new_pCol] = update_board_with_fen(board[new_pCol], new_pRow, piece)         
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result)
+                moves.append(result + ' ' +turn)                       
 
     return moves
 
@@ -442,7 +443,7 @@ def move_k(board, pCol, pRow, piece):
                 newboard[pCol] =  update_old_fen(board[pCol], pRow)    
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result)  
+                moves.append(result + ' ' +turn)                       
 
             else:
                 # print("The new update: " + update_board_with_fen(board[new_pCol], new_pRow, piece))
@@ -454,7 +455,7 @@ def move_k(board, pCol, pRow, piece):
                     newboard[new_pCol] = update_board_with_fen(board[new_pCol], new_pRow, piece)         
                 result = '/'.join(newboard)
                 print(result)   
-                moves.append(result)
+                moves.append(result + ' ' +turn)                       
     return moves
 
 def move_n(board, pCol, pRow, piece):
@@ -476,7 +477,7 @@ def move_n(board, pCol, pRow, piece):
                 newboard[pCol] =  update_old_fen(board[pCol], pRow)
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result)                       
+                moves.append(result + ' ' +turn)                       
             else:
                 # print("The old update: " + update_old_fen(board[pCol], pRow))
                 # print("The new update: " + update_board_with_fen(board[new_pCol], new_pRow, piece))
@@ -485,14 +486,20 @@ def move_n(board, pCol, pRow, piece):
                 newboard[pCol] =  update_old_fen(board[pCol], pRow)
                 result = '/'.join(newboard)
                 print(result)
-                moves.append(result)                                                 
+                moves.append(result + ' ' +turn)                       
     return moves
 
 
 
 
 def generate_legal_moves(fen):
+    global turn
     board, turn, _, _, _, _ = parse_fen(fen)
+    if turn == 'w':
+        turn = 'b'
+    else:
+        turn = 'w'
+
     all_moves = []  # Initialize an empty list to collect all moves
     for pCol, row in enumerate(board):
         rowTemp = 0
@@ -526,6 +533,8 @@ def generate_legal_moves(fen):
             else:
                 rowTemp += 1
     return all_moves
+
+
 fen = "1n6/1p1k1ppr/rP6/p1p1PN2/R3pNRb/1QP5/5P2/4K3 w - - 0 24"
 all_moves = generate_legal_moves(fen)
 
